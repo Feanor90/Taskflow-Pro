@@ -2,10 +2,12 @@ import { PomodoroTimer } from '@/components/pomodoro/PomodoroTimer';
 
 export default function PomodoroPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Pomodoro Timer</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          Pomodoro Timer
+        </h1>
+        <p className="mt-2 text-gray-400">
           Mantén tu foco con sesiones de trabajo estructuradas
         </p>
       </div>
@@ -14,15 +16,27 @@ export default function PomodoroPage() {
         <PomodoroTimer />
       </div>
 
-      <div className="rounded-lg bg-blue-50 p-4 border border-blue-200">
-        <h3 className="text-sm font-semibold text-blue-900 mb-2">
+      <div className="card-floating gradient-cyan border-cyan-500/30">
+        <h3 className="text-sm font-semibold text-cyan-300 mb-3">
           💡 Consejos para usar el Pomodoro
         </h3>
-        <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Trabaja en bloques de 25 minutos con foco total</li>
-          <li>• Toma descansos cortos de 5 minutos entre sesiones</li>
-          <li>• Después de 4 pomodoros, toma un descanso largo de 15 minutos</li>
-          <li>• Elimina todas las distracciones durante la sesión</li>
+        <ul className="text-sm text-gray-300 space-y-2">
+          <li className="flex items-start gap-2">
+            <span className="text-cyan-400 mt-0.5">•</span>
+            <span>Trabaja en bloques de 25 minutos con foco total</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-cyan-400 mt-0.5">•</span>
+            <span>Toma descansos cortos de 5 minutos entre sesiones</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-cyan-400 mt-0.5">•</span>
+            <span>Después de 4 pomodoros, toma un descanso largo de 15 minutos</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-cyan-400 mt-0.5">•</span>
+            <span>Elimina todas las distracciones durante la sesión</span>
+          </li>
         </ul>
       </div>
     </div>

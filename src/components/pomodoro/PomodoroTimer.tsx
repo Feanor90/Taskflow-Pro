@@ -74,25 +74,28 @@ export function PomodoroTimer() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Timer Display */}
-      <div className={cn('rounded-2xl p-12 text-center', getSessionColor())}>
-        <div className="mb-4">
-          <h2 className={cn('text-xl font-semibold', getSessionTextColor())}>
-            {getSessionLabel()}
-          </h2>
-        </div>
-
-        <div className={cn('text-8xl font-bold tabular-nums', getSessionTextColor())}>
-          {session ? formatTime(session.timeRemaining) : '25:00'}
-        </div>
-
-        {session && session.interruptions > 0 && (
-          <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-600">
-            <AlertCircle className="h-4 w-4" />
-            <span>{session.interruptions} interrupción{session.interruptions > 1 ? 'es' : ''}</span>
+      <div className={cn('card-floating relative overflow-hidden p-16 text-center', getSessionColor())}>
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 opacity-50"></div>
+        <div className="relative">
+          <div className="mb-6">
+            <h2 className={cn('text-2xl font-semibold', getSessionTextColor())}>
+              {getSessionLabel()}
+            </h2>
           </div>
-        )}
+
+          <div className={cn('text-9xl font-bold tabular-nums bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent', getSessionTextColor())}>
+            {session ? formatTime(session.timeRemaining) : '25:00'}
+          </div>
+
+          {session && session.interruptions > 0 && (
+            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-400 bg-gray-800/50 px-4 py-2 rounded-xl border border-gray-700 inline-flex">
+              <AlertCircle className="h-4 w-4 text-orange-400" />
+              <span>{session.interruptions} interrupción{session.interruptions > 1 ? 'es' : ''}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Controls */}
@@ -133,14 +136,14 @@ export function PomodoroTimer() {
 
       {/* Session Type Selector */}
       {!session && (
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-3">
           <button
             onClick={() => setSessionType('pomodoro')}
             className={cn(
-              'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
               sessionType === 'pomodoro'
-                ? 'bg-pomodoro-work text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/30'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
             )}
           >
             Pomodoro
@@ -148,10 +151,10 @@ export function PomodoroTimer() {
           <button
             onClick={() => setSessionType('short_break')}
             className={cn(
-              'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
               sessionType === 'short_break'
-                ? 'bg-pomodoro-break text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
             )}
           >
             Descanso Corto
@@ -159,10 +162,10 @@ export function PomodoroTimer() {
           <button
             onClick={() => setSessionType('long_break')}
             className={cn(
-              'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
               sessionType === 'long_break'
-                ? 'bg-pomodoro-longBreak text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
             )}
           >
             Descanso Largo
@@ -172,14 +175,14 @@ export function PomodoroTimer() {
 
       {/* Task Selector */}
       {!session && sessionType === 'pomodoro' && (
-        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="card-floating">
+          <label className="label mb-3">
             Tarea Asociada (Opcional)
           </label>
           <select
             value={selectedTaskId || ''}
             onChange={(e) => setSelectedTaskId(e.target.value || undefined)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="input"
           >
             <option value="">Sin tarea específica</option>
             {tasks?.map((task) => (

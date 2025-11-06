@@ -9,15 +9,17 @@ export default function TasksPage() {
   const [filters, setFilters] = useState<TaskFiltersType>({});
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Mis Tareas</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          Mis Tareas
+        </h1>
+        <p className="mt-2 text-gray-400">
           Gestiona tus tareas y proyectos
         </p>
       </div>
 
-      <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+      <div className="card-floating">
         <TaskFilters filters={filters} onChange={setFilters} />
       </div>
 

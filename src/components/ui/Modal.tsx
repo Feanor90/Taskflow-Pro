@@ -26,14 +26,14 @@ export function Modal({
       <div className="flex min-h-screen items-center justify-center p-4">
         {/* Backdrop */}
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
           onClick={onClose}
         />
 
         {/* Modal */}
         <div
           className={cn(
-            'relative w-full rounded-lg bg-white shadow-xl',
+            'relative w-full rounded-2xl glass border border-gray-800 shadow-2xl',
             {
               'max-w-sm': size === 'sm',
               'max-w-md': size === 'md',
@@ -43,11 +43,11 @@ export function Modal({
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+          <div className="flex items-center justify-between border-b border-gray-800/50 px-6 py-4">
+            <h3 className="text-lg font-semibold text-white">{title}</h3>
             <button
               onClick={onClose}
-              className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              className="rounded-xl p-1.5 text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 transition-all"
             >
               <X className="h-5 w-5" />
             </button>

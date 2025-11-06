@@ -37,19 +37,21 @@ export function Sidebar() {
   };
 
   return (
-    <div className="flex h-screen w-64 flex-col bg-white border-r border-gray-200">
+    <div className="flex h-screen w-64 flex-col glass border-r border-gray-800/50 backdrop-blur-xl">
       {/* Logo */}
-      <div className="flex h-16 items-center px-6 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary-600 flex items-center justify-center">
+      <div className="flex h-16 items-center px-6 border-b border-gray-800/50">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
             <Timer className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-gray-900">TaskFlow Pro</span>
+          <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            TaskFlow Pro
+          </span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-2 px-3 py-4">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -57,13 +59,13 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
                 isActive
-                  ? 'bg-primary-50 text-primary-700'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/10'
+                  : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'
               )}
             >
-              <item.icon className="h-5 w-5" />
+              <item.icon className={cn('h-5 w-5', isActive ? 'text-cyan-400' : '')} />
               {item.name}
             </Link>
           );
@@ -71,15 +73,15 @@ export function Sidebar() {
       </nav>
 
       {/* User section */}
-      <div className="border-t border-gray-200 p-4">
+      <div className="border-t border-gray-800/50 p-4">
         <div className="flex items-center gap-3 mb-3">
-          <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
-            <span className="text-sm font-medium text-primary-700">
+          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <span className="text-sm font-medium text-white">
               {user?.email?.charAt(0).toUpperCase()}
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">
+            <p className="text-sm font-medium text-gray-100 truncate">
               {user?.user_metadata?.name || user?.email?.split('@')[0]}
             </p>
             <p className="text-xs text-gray-500 truncate">{user?.email}</p>
@@ -87,7 +89,7 @@ export function Sidebar() {
         </div>
         <button
           onClick={handleSignOut}
-          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+          className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-800/50 hover:text-gray-200 transition-all duration-200"
         >
           <LogOut className="h-4 w-4" />
           Cerrar Sesión

@@ -39,11 +39,28 @@ export function TaskList({ filters }: TaskListProps) {
     if (!editingTask) return;
 
     try {
-      await updateTask.mutateAsync({ id: editingTask.id, data });
+      console.log('Intentando actualizar tarea:', { id: editingTask.id, data });
+      
+      const updateData: any = {};
+      
+      if (data.title !== undefined && data.title !== null) updateData.title = data.title;
+      if (data.description !== undefined) updateData.description = data.description || null;
+      if (data.priority !== undefined) updateData.priority = data.priority;
+      if (data.category !== undefined) updateData.category = data.category;
+      if (data.estimatedPomodoros !== undefined) updateData.estimatedPomodoros = data.estimatedPomodoros;
+      if (data.dueDate !== undefined) updateData.dueDate = data.dueDate || null;
+      if (data.tags !== undefined) updateData.tags = data.tags || [];
+      
+      console.log('Datos de actualización preparados:', updateData);
+      
+      await updateTask.mutateAsync({ id: editingTask.id, data: updateData });
+      console.log('Tarea actualizada exitosamente');
       setEditingTask(null);
       setIsModalOpen(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating task:', error);
+      const errorMessage = error.message || 'Error al actualizar la tarea. Por favor, intenta de nuevo.';
+      alert(errorMessage);
     }
   };
 

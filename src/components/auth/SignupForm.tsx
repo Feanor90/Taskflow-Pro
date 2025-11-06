@@ -60,11 +60,11 @@ export function SignupForm() {
   if (success) {
     return (
       <div className="w-full max-w-md text-center">
-        <div className="rounded-lg bg-green-50 p-6">
-          <h3 className="text-lg font-semibold text-green-800">
+        <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-6">
+          <h3 className="text-lg font-semibold text-green-400">
             ¡Cuenta creada exitosamente!
           </h3>
-          <p className="mt-2 text-sm text-green-700">
+          <p className="mt-2 text-sm text-green-300">
             Redirigiendo al dashboard...
           </p>
         </div>
@@ -75,24 +75,23 @@ export function SignupForm() {
   return (
     <div className="w-full max-w-md space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight">Crear Cuenta</h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          Crear Cuenta
+        </h2>
+        <p className="mt-2 text-sm text-gray-400">
           Únete a TaskFlow Pro y aumenta tu productividad
         </p>
       </div>
 
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <div className="rounded-xl bg-red-500/10 border border-red-500/30 p-4 text-sm text-red-400">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="name" className="label">
             Nombre
           </label>
           <input
@@ -101,16 +100,13 @@ export function SignupForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="input"
             placeholder="Tu nombre"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="email" className="label">
             Email
           </label>
           <input
@@ -119,16 +115,13 @@ export function SignupForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="input"
             placeholder="tu@email.com"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="password" className="label">
             Contraseña
           </label>
           <input
@@ -137,16 +130,13 @@ export function SignupForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="input"
             placeholder="••••••••"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="confirmPassword" className="label">
             Confirmar Contraseña
           </label>
           <input
@@ -155,7 +145,7 @@ export function SignupForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="input"
             placeholder="••••••••"
           />
         </div>
@@ -163,7 +153,7 @@ export function SignupForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+          className="btn-primary w-full py-3"
         >
           {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
         </button>
@@ -171,10 +161,10 @@ export function SignupForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300" />
+          <div className="w-full border-t border-gray-700" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-gray-500">O regístrate con</span>
+          <span className="bg-gray-900 px-2 text-gray-400">O regístrate con</span>
         </div>
       </div>
 
@@ -183,7 +173,7 @@ export function SignupForm() {
           type="button"
           onClick={() => handleOAuthSignIn('google')}
           disabled={loading}
-          className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+          className="btn-secondary flex items-center justify-center gap-2"
         >
           <Mail className="h-5 w-5" />
           Google
@@ -193,18 +183,18 @@ export function SignupForm() {
           type="button"
           onClick={() => handleOAuthSignIn('github')}
           disabled={loading}
-          className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+          className="btn-secondary flex items-center justify-center gap-2"
         >
           <Github className="h-5 w-5" />
           GitHub
         </button>
       </div>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-gray-400">
         ¿Ya tienes cuenta?{' '}
         <a
           href="/login"
-          className="font-medium text-primary-600 hover:text-primary-500"
+          className="font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
         >
           Inicia sesión
         </a>

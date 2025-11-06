@@ -7,7 +7,20 @@ import type { Database } from '@/types/database';
 const updateTaskSchema = z.object({
   title: z.string().min(1).max(255).optional(),
   description: z.string().max(2000).optional().nullable(),
-  dueDate: z.string().datetime().optional().nullable(),
+  dueDate: z.custom<string | null>((val) => {
+    if (val === null || val === undefined) return true;
+    if (typeof val === 'string') {
+      try {
+        const date = new Date(val);
+        return !isNaN(date.getTime()) && val.includes('T');
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  }, {
+    message: 'Invalid datetime',
+  }).optional(),
   priority: z.enum(['low', 'medium', 'high', 'urgent']).optional(),
   category: z.enum(['work', 'personal', 'study', 'health']).optional(),
   estimatedPomodoros: z.number().int().min(1).max(20).optional(),
@@ -85,7 +98,10 @@ export async function PUT(
     const user = session.user;
 
     const body = await request.json();
+    console.log('PUT /api/tasks/[id]: Datos recibidos:', body);
+    
     const validatedData = updateTaskSchema.parse(body);
+    console.log('PUT /api/tasks/[id]: Datos validados:', validatedData);
 
     const updateData: any = {};
 
@@ -129,6 +145,7 @@ export async function PUT(
     return NextResponse.json({ data: task });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Error de validación Zod:', error.errors);
       return NextResponse.json(
         { error: 'Datos inválidos', details: error.errors },
         { status: 400 }

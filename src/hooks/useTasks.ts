@@ -126,6 +126,8 @@ export function useUpdateTask() {
       id: string;
       data: UpdateTaskInput;
     }) => {
+      console.log('useUpdateTask: Enviando datos:', { id, data });
+      
       const response = await fetch(`/api/tasks/${id}`, {
         method: 'PUT',
         headers: {
@@ -134,12 +136,19 @@ export function useUpdateTask() {
         body: JSON.stringify(data),
       });
 
+      console.log('useUpdateTask: Response status:', response.status);
+
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Error al actualizar tarea');
+        console.error('useUpdateTask: Error response:', error);
+        const errorMessage = error.details 
+          ? `${error.error}: ${JSON.stringify(error.details)}`
+          : error.error || 'Error al actualizar tarea';
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
+      console.log('useUpdateTask: Tarea actualizada:', result);
       return result.data as Task;
     },
     onMutate: async ({ id, data }) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
 import type { CreateTaskInput, Task } from '@/types/task';
 
@@ -22,9 +22,74 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
     tags: task?.tags || [],
   });
 
+  useEffect(() => {
+    if (task) {
+      setFormData({
+        title: task.title || '',
+        description: task.description || '',
+        priority: task.priority || 'medium',
+        category: task.category || 'personal',
+        estimatedPomodoros: task.estimated_pomodoros || 1,
+        dueDate: task.due_date || undefined,
+        tags: task.tags || [],
+      });
+    } else {
+      setFormData({
+        title: '',
+        description: '',
+        priority: 'medium',
+        category: 'personal',
+        estimatedPomodoros: 1,
+        dueDate: undefined,
+        tags: [],
+      });
+    }
+  }, [task]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    const dataToSubmit: any = {};
+    
+    if (task) {
+      // Al actualizar, siempre enviar título si existe
+      if (formData.title && formData.title.trim().length > 0) {
+        dataToSubmit.title = formData.title.trim();
+      }
+    } else {
+      // Al crear, título es requerido
+      dataToSubmit.title = formData.title.trim();
+    }
+    
+    if (formData.description !== undefined) {
+      dataToSubmit.description = formData.description && formData.description.trim().length > 0 
+        ? formData.description.trim() 
+        : null;
+    }
+    
+    if (formData.priority) {
+      dataToSubmit.priority = formData.priority;
+    }
+    
+    if (formData.category) {
+      dataToSubmit.category = formData.category;
+    }
+    
+    if (formData.estimatedPomodoros !== undefined) {
+      dataToSubmit.estimatedPomodoros = formData.estimatedPomodoros;
+    }
+    
+    if (formData.dueDate) {
+      dataToSubmit.dueDate = formData.dueDate;
+    } else if (task && task.due_date) {
+      dataToSubmit.dueDate = null;
+    }
+    
+    if (formData.tags !== undefined) {
+      dataToSubmit.tags = formData.tags || [];
+    }
+    
+    onSubmit(dataToSubmit);
   };
 
   return (

@@ -1,31 +1,82 @@
-# TaskFlow-Pro
+# TaskFlow Pro
 
-Sistema de gestión de tareas y proyectos empresariales con capacidades avanzadas de colaboración y análisis.
+Aplicación de gestión de tareas con técnica Pomodoro integrada para máxima productividad.
 
-## Descripción
+## Stack Tecnológico
 
-TaskFlow-Pro es una aplicación web moderna diseñada para la gestión eficiente de tareas y proyectos en entornos empresariales. Ofrece funcionalidades avanzadas de colaboración, seguimiento de progreso y análisis de productividad.
+- **Frontend**: Next.js 14 (App Router) + TypeScript + Tailwind CSS
+- **Backend**: Next.js API Routes + Supabase
+- **Base de Datos**: PostgreSQL (Supabase)
+- **Autenticación**: Supabase Auth (OAuth + Email)
+- **Estado**: React Query + Zustand
+- **Validación**: Zod
+- **PWA**: Service Workers + IndexedDB
 
-## Documentación
+## Características Principales
 
-La documentación del proyecto se encuentra en la carpeta `docs/`:
+- ✅ Gestión completa de tareas (CRUD)
+- ⏱️ Timer Pomodoro de alta precisión
+- 📊 Analytics y métricas de productividad
+- 🔔 Notificaciones de browser
+- 📱 PWA con soporte offline
+- 🔄 Sincronización en tiempo real
+- 🎨 UI moderna y responsive
 
-- [PRD (Product Requirements Document)](docs/PRD.md) - Requisitos del producto
-- [Diseño Técnico](docs/technical-design.md) - Arquitectura y diseño técnico
-- [Tareas de Implementación](docs/implementation-tasks.md) - Plan de desarrollo
+## Instalación
 
-## Tecnologías
+```bash
+# Instalar dependencias
+npm install
 
-- Frontend: React con TypeScript
-- Backend: Node.js con Express
-- Base de datos: PostgreSQL
-- Autenticación: JWT
+# Configurar variables de entorno
+cp .env.local.example .env.local
+# Editar .env.local con tus credenciales de Supabase
 
-## Estado del Proyecto
+# Ejecutar en desarrollo
+npm run dev
 
-🚧 En desarrollo
+# Build para producción
+npm run build
+npm start
+```
+
+## Variables de Entorno
+
+Crea un archivo `.env.local` con las siguientes variables:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
+SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+ENCRYPTION_KEY=tu_clave_de_32_caracteres
+```
+
+## Estructura del Proyecto
+
+```
+taskflow-pro/
+├── src/
+│   ├── app/              # App Router de Next.js
+│   │   ├── (auth)/       # Rutas de autenticación
+│   │   ├── (dashboard)/  # Rutas del dashboard
+│   │   └── api/          # API Routes
+│   ├── components/       # Componentes React
+│   ├── lib/              # Utilidades y configuración
+│   ├── hooks/            # Custom hooks
+│   └── types/            # Definiciones de TypeScript
+├── public/               # Assets estáticos
+└── docs/                 # Documentación
+```
+
+## Scripts Disponibles
+
+- `npm run dev` - Servidor de desarrollo
+- `npm run build` - Build de producción
+- `npm start` - Servidor de producción
+- `npm run lint` - Linter
+- `npm run type-check` - Verificación de tipos
 
 ## Licencia
 
-Todos los derechos reservados
-
+MIT

@@ -2,6 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Task, CreateTaskInput, UpdateTaskInput, TaskFilters } from '@/types/task';
+import { fetchJSON } from '@/lib/api';
 
 // Fetch tasks
 export function useTasks(filters?: TaskFilters) {
@@ -16,16 +17,14 @@ export function useTasks(filters?: TaskFilters) {
         params.append('completed', filters.completed.toString());
       if (filters?.search) params.append('search', filters.search);
 
-      const response = await fetch(`/api/tasks?${params}`);
+      const data = await fetchJSON<{ data: Task[] }>(`/api/tasks?${params}`, {
+        timeout: 30000, // 30 segundos
+      });
 
-      if (!response.ok) {
-        throw new Error('Error al obtener tareas');
-      }
-
-      const data = await response.json();
-      return data.data as Task[];
+      return data.data || [];
     },
     staleTime: 1000 * 60 * 5, // 5 minutos
+    retry: 2, // Reintentar 2 veces en caso de error
   });
 }
 
@@ -34,16 +33,13 @@ export function useTask(id: string) {
   return useQuery({
     queryKey: ['tasks', id],
     queryFn: async () => {
-      const response = await fetch(`/api/tasks/${id}`);
-
-      if (!response.ok) {
-        throw new Error('Error al obtener tarea');
-      }
-
-      const data = await response.json();
-      return data.data as Task;
+      const data = await fetchJSON<{ data: Task }>(`/api/tasks/${id}`, {
+        timeout: 30000,
+      });
+      return data.data;
     },
     enabled: !!id,
+    retry: 2,
   });
 }
 
@@ -55,25 +51,22 @@ export function useCreateTask() {
     mutationFn: async (data: CreateTaskInput) => {
       console.log('useCreateTask: Enviando datos:', data);
       
-      const response = await fetch('/api/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      try {
+        const result = await fetchJSON<{ data: Task }>('/api/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          timeout: 30000, // 30 segundos
+        });
 
-      console.log('useCreateTask: Response status:', response.status);
-
-      if (!response.ok) {
-        const error = await response.json();
-        console.error('useCreateTask: Error response:', error);
-        throw new Error(error.error || 'Error al crear tarea');
+        console.log('useCreateTask: Tarea creada:', result);
+        return result.data;
+      } catch (error: any) {
+        console.error('useCreateTask: Error:', error);
+        throw error;
       }
-
-      const result = await response.json();
-      console.log('useCreateTask: Tarea creada:', result);
-      return result.data as Task;
     },
     onMutate: async (newTask) => {
       // Cancel any outgoing refetches
@@ -101,7 +94,7 @@ export function useCreateTask() {
 
       return { previousTasks };
     },
-    onError: (err, newTask, context) => {
+    onError: (_err, _newTask, context) => {
       // If the mutation fails, use the context to roll back
       if (context?.previousTasks) {
         queryClient.setQueryData(['tasks'], context.previousTasks);
@@ -128,28 +121,22 @@ export function useUpdateTask() {
     }) => {
       console.log('useUpdateTask: Enviando datos:', { id, data });
       
-      const response = await fetch(`/api/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      try {
+        const result = await fetchJSON<{ data: Task }>(`/api/tasks/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          timeout: 30000,
+        });
 
-      console.log('useUpdateTask: Response status:', response.status);
-
-      if (!response.ok) {
-        const error = await response.json();
-        console.error('useUpdateTask: Error response:', error);
-        const errorMessage = error.details 
-          ? `${error.error}: ${JSON.stringify(error.details)}`
-          : error.error || 'Error al actualizar tarea';
-        throw new Error(errorMessage);
+        console.log('useUpdateTask: Tarea actualizada:', result);
+        return result.data;
+      } catch (error: any) {
+        console.error('useUpdateTask: Error:', error);
+        throw error;
       }
-
-      const result = await response.json();
-      console.log('useUpdateTask: Tarea actualizada:', result);
-      return result.data as Task;
     },
     onMutate: async ({ id, data }) => {
       // Cancel any outgoing refetches
@@ -175,7 +162,7 @@ export function useUpdateTask() {
 
       return { previousTasks, previousTask };
     },
-    onError: (err, { id }, context) => {
+    onError: (_err, { id }, context) => {
       // If the mutation fails, use the context to roll back
       if (context?.previousTasks) {
         queryClient.setQueryData(['tasks'], context.previousTasks);
@@ -184,7 +171,7 @@ export function useUpdateTask() {
         queryClient.setQueryData(['tasks', id], context.previousTask);
       }
     },
-    onSettled: (data, error, { id }) => {
+    onSettled: (_data, _error, { id }) => {
       // Always refetch after error or success
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
       queryClient.invalidateQueries({ queryKey: ['tasks', id] });
@@ -198,16 +185,16 @@ export function useDeleteTask() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/tasks/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Error al eliminar tarea');
+      try {
+        await fetchJSON(`/api/tasks/${id}`, {
+          method: 'DELETE',
+          timeout: 30000,
+        });
+        return id;
+      } catch (error: any) {
+        console.error('useDeleteTask: Error:', error);
+        throw error;
       }
-
-      return id;
     },
     onMutate: async (id) => {
       // Cancel any outgoing refetches

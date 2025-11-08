@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 import type { TaskFilters as TaskFiltersType } from '@/types/task';
 
 interface TaskFiltersProps {

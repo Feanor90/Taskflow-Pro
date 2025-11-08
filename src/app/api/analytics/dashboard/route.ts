@@ -30,15 +30,20 @@ export async function GET(request: Request) {
       .split('T')[0];
 
     // Obtener estadísticas de hoy
-    const { data: todayMetrics } = await supabase
+    const { data: todayMetrics, error: todayMetricsError } = await supabase
       .from('productivity_metrics')
       .select('*')
       .eq('user_id', user.id)
       .eq('date', today)
-      .single();
+      .maybeSingle();
+
+    // Si hay error y no es porque no hay datos, loguearlo
+    if (todayMetricsError && todayMetricsError.code !== 'PGRST116') {
+      console.error('Error obteniendo métricas de hoy:', todayMetricsError);
+    }
 
     // Obtener tareas completadas hoy
-    const { data: todayTasks } = await supabase
+    const { data: todayTasks, error: todayTasksError } = await supabase
       .from('tasks')
       .select('*')
       .eq('user_id', user.id)
@@ -46,15 +51,23 @@ export async function GET(request: Request) {
       .gte('completed_at', `${today}T00:00:00`)
       .lte('completed_at', `${today}T23:59:59`);
 
+    if (todayTasksError) {
+      console.error('Error obteniendo tareas de hoy:', todayTasksError);
+    }
+
     // Obtener total de tareas
-    const { count: totalTasks } = await supabase
+    const { count: totalTasks, error: totalTasksError } = await supabase
       .from('tasks')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
       .eq('completed', false);
 
+    if (totalTasksError) {
+      console.error('Error obteniendo total de tareas:', totalTasksError);
+    }
+
     // Obtener métricas de la semana
-    const { data: weekMetrics } = await supabase
+    const { data: weekMetrics, error: weekMetricsError } = await supabase
       .from('productivity_metrics')
       .select('*')
       .eq('user_id', user.id)
@@ -62,8 +75,12 @@ export async function GET(request: Request) {
       .lte('date', endDate || today)
       .order('date', { ascending: true });
 
+    if (weekMetricsError) {
+      console.error('Error obteniendo métricas de la semana:', weekMetricsError);
+    }
+
     // Obtener sesiones de pomodoro recientes
-    const { data: recentSessions } = await supabase
+    const { data: recentSessions, error: recentSessionsError } = await supabase
       .from('pomodoro_sessions')
       .select('*')
       .eq('user_id', user.id)
@@ -72,11 +89,19 @@ export async function GET(request: Request) {
       .gte('start_time', `${weekAgo}T00:00:00`)
       .order('start_time', { ascending: false });
 
+    if (recentSessionsError) {
+      console.error('Error obteniendo sesiones recientes:', recentSessionsError);
+    }
+
     // Calcular estadísticas por categoría
-    const { data: tasksByCategory } = await supabase
+    const { data: tasksByCategory, error: tasksByCategoryError } = await supabase
       .from('tasks')
       .select('category, completed')
       .eq('user_id', user.id);
+
+    if (tasksByCategoryError) {
+      console.error('Error obteniendo tareas por categoría:', tasksByCategoryError);
+    }
 
     const categoryStats = tasksByCategory?.reduce((acc: any, task) => {
       const cat = task.category;

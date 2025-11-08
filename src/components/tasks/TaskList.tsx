@@ -31,7 +31,23 @@ export function TaskList({ filters }: TaskListProps) {
       setIsModalOpen(false);
     } catch (error: any) {
       console.error('Error creating task:', error);
-      alert(error.message || 'Error al crear la tarea. Por favor, intenta de nuevo.');
+      
+      // Mensajes de error más específicos
+      let errorMessage = 'Error al crear la tarea. Por favor, intenta de nuevo.';
+      
+      if (error.message) {
+        if (error.message.includes('timeout') || error.message.includes('408')) {
+          errorMessage = 'La petición tardó demasiado. Por favor, verifica tu conexión e intenta de nuevo.';
+        } else if (error.message.includes('401') || error.message.includes('No autorizado')) {
+          errorMessage = 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.';
+        } else if (error.message.includes('JSON')) {
+          errorMessage = 'Error de comunicación con el servidor. Por favor, intenta de nuevo.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      alert(errorMessage);
     }
   };
 
@@ -59,7 +75,22 @@ export function TaskList({ filters }: TaskListProps) {
       setIsModalOpen(false);
     } catch (error: any) {
       console.error('Error updating task:', error);
-      const errorMessage = error.message || 'Error al actualizar la tarea. Por favor, intenta de nuevo.';
+      
+      // Mensajes de error más específicos
+      let errorMessage = 'Error al actualizar la tarea. Por favor, intenta de nuevo.';
+      
+      if (error.message) {
+        if (error.message.includes('timeout') || error.message.includes('408')) {
+          errorMessage = 'La petición tardó demasiado. Por favor, verifica tu conexión e intenta de nuevo.';
+        } else if (error.message.includes('401') || error.message.includes('No autorizado')) {
+          errorMessage = 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.';
+        } else if (error.message.includes('JSON')) {
+          errorMessage = 'Error de comunicación con el servidor. Por favor, intenta de nuevo.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       alert(errorMessage);
     }
   };

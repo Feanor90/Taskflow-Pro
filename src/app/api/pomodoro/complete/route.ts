@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const validatedData = completeSessionSchema.parse(body);
 
     // Guardar sesión en la base de datos
-    const { data: session, error: sessionError } = await supabase
+    const { data: pomodoroSession, error: pomodoroSessionError } = await supabase
       .from('pomodoro_sessions')
       .insert({
         user_id: user.id,
@@ -49,8 +49,8 @@ export async function POST(request: Request) {
       .select()
       .single();
 
-    if (sessionError) {
-      console.error('Error creating session:', sessionError);
+    if (pomodoroSessionError) {
+      console.error('Error creating session:', pomodoroSessionError);
       return NextResponse.json(
         { error: 'Error al guardar sesión' },
         { status: 500 }
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ data: session }, { status: 201 });
+    return NextResponse.json({ data: pomodoroSession }, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(

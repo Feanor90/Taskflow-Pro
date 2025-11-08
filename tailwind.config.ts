@@ -8,8 +8,38 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-primary)', 'Play', 'sans-serif'],
+      },
       colors: {
-        // Paleta aesthetic moderna - modo oscuro
+        // Agentic Engineer Color Palette
+        gold: {
+          DEFAULT: '#FFD700',
+          50: '#fffef0',
+          100: '#fffce0',
+          200: '#fff9c0',
+          300: '#fff680',
+          400: '#fff340',
+          500: '#FFD700',
+          600: '#ccac00',
+          700: '#998100',
+          800: '#665600',
+          900: '#332b00',
+        },
+        sky: {
+          DEFAULT: 'rgb(135, 206, 235)',
+          50: '#e6f5fc',
+          100: '#ccebf9',
+          200: '#99d7f3',
+          300: '#66c3ed',
+          400: '#33afe7',
+          500: 'rgb(135, 206, 235)',
+          600: '#0a7ba8',
+          700: '#085c7e',
+          800: '#053d54',
+          900: '#021e2a',
+        },
+        // Mantener colores existentes para compatibilidad
         primary: {
           50: '#ecfeff',
           100: '#cffafe',
@@ -57,7 +87,11 @@ const config: Config = {
         'glow-cyan': '0 0 20px rgba(56, 189, 248, 0.3)',
         'glow-purple': '0 0 20px rgba(139, 92, 246, 0.3)',
         'glow-orange': '0 0 20px rgba(251, 146, 60, 0.3)',
+        'glow-gold': '0 0 30px rgba(255, 215, 0, 0.4)',
+        'glow-gold-sm': '0 0 20px rgba(255, 215, 0, 0.3)',
         'floating': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'agentic': '0 4px 20px rgba(0, 0, 0, 0.3)',
+        'agentic-hover': '0 0 30px rgba(255, 215, 0, 0.4)',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

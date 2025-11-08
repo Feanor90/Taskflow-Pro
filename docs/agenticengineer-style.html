@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Engineer Style - UXStyleMaster Extraction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Play', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Button Styles - Agentic Engineer Style */
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: rgba(0, 0, 0, 0.4);
+            color: #FFFFFF;
+            border-color: #FFD700;
+            font-size: 18px;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            border-color: rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-accent {
+            background: rgba(255, 255, 64, 0.4);
+            color: #FFFFFF;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn-accent:hover {
+            background: rgba(255, 255, 64, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 128px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #FFFFFF, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: rgba(0, 0, 0, 0.6);
+            color: #FFFFFF;
+            padding: 32px 64px;
+            font-size: 24px;
+            border: 2px solid #FFD700;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 64px;
+            font-weight: 700;
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            font-size: 128px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 20px;
+            margin: 60px 0;
+        }
+
+        .pricing-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+        }
+
+        .pricing-price {
+            font-size: 64px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .pricing-features li {
+            margin: 15px 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .pricing-features strong {
+            color: #FFD700;
+        }
+
+        /* FAQ Section */
+        .faq {
+            margin: 60px 0;
+        }
+
+        .faq-item {
+            background: rgba(0, 0, 0, 0.3);
+            margin: 15px 0;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 20px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 60px 0 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 100px;
+        }
+
+        .footer h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer p {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .glow-border {
+            border-color: #FFD700 !important;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3) !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 64px;
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .section-subtitle {
+                font-size: 64px;
+            }
+
+            .cta-button {
+                padding: 20px 30px;
+                font-size: 18px;
+            }
+
+            .pricing-title {
+                font-size: 32px;
+            }
+
+            .pricing-price {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Agentic Engineer</div>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary">Login</button>
+                    <button class="btn btn-primary">MASTER AGENTIC CODING</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Tactical Agentic Coding</h1>
+            <h2>Master the tactics of Agentic Coding. Scale FAR beyond AI Coding and Vibe Coding</h2>
+            <button class="btn cta-button">Start Your Journey</button>
+        </div>
+    </section>
+
+    <!-- AI Coding Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-subtitle">AI CODING IS<br>NOT ENOUGH</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>The Problem</h3>
+                    <p>While everyone sits "In the Loop" prompting back and forth with powerful agentic coding tools, 90% of the true value of AI Agents lies untapped.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>The Solution</h3>
+                    <p>Agentic Engineering isn't about models, prompting, or agents — it's about composing the old world of software engineering with the new world of agents.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>The Result</h3>
+                    <p>Build systems that build systems. Encode your engineering excellence into your agents with templates and ADWs so they ship on your behalf.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Question -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-subtitle">What if your<br>codebase could<br>ship itself?</h2>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What will you learn?</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>The 12 Leverage Points</h3>
+                    <p>Master the in-agent and through-agent leverage points that maximize your agents' autonomy.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Out of the Loop Engineering</h3>
+                    <p>Progress from "In the Loop" prompting to fully autonomous "Out of the Loop" systems.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Teach Your Agents Your Way</h3>
+                    <p>Encode your best engineering practices into your agents so they ship how you would ship.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI Developer Workflows</h3>
+                    <p>Build the highest level of agentic abstraction by combining deterministic code with non-deterministic agents.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Measure Your Agentic Success</h3>
+                    <p>Track your progression with four critical agentic coding KPIs. KNOW you're improving.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Prioritize Your Agents</h3>
+                    <p>Progress toward the North Star where your codebase literally runs itself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="pricing-title">Tactical Agentic Coding Course</h2>
+            <div class="pricing-price">$599</div>
+
+            <ul class="pricing-features">
+                <li>8 Tactics of Agentic Coding to become an irreplaceable engineer</li>
+                <li>One-time payment, lifetime access</li>
+                <li>Built for Mid/Senior+ engineers ready to command fleets of agents</li>
+                <li>Use the best Agentic Coding tool: Claude Code</li>
+                <li><strong>(Bonus)</strong> Private repositories to accelerate your Agentic Engineering</li>
+                <li><strong>(Bonus)</strong> Extend Principles of AI Coding used by thousands of engineers</li>
+                <li><strong>(Bonus)</strong> Measure your growth with concrete Agentic Coding KPIs</li>
+                <li><strong>(Risk Free)</strong> No questions asked, 30 day refund before lesson four</li>
+            </ul>
+
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 40px;">
+                <button class="btn btn-accent">Individual</button>
+                <button class="btn btn-secondary">Team</button>
+            </div>
+
+            <button class="btn cta-button" style="margin-top: 30px;">MASTER AGENTIC CODING</button>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Who is TAC built for? Is this course right for me?
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What tools are used in the Tactical Agentic Coding course?
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What Primary Agentic Coding tool will we be using?
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do I need prior agentic coding experience?
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How is this different from Principled AI Coding?
+                    <span>▼</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3>TAC</h3>
+            <p>Become an Irreplaceable Engineer</p>
+            <p style="opacity: 0.6; font-size: 14px;">Style extracted by UXStyleMaster from agenticengineer.com</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -20,13 +20,6 @@ const categoryColors = {
   health: 'bg-green-500/20 text-green-400 border-green-500/30',
 };
 
-const priorityColors = {
-  low: 'text-gray-600',
-  medium: 'text-blue-600',
-  high: 'text-orange-600',
-  urgent: 'text-red-600',
-};
-
 const categoryLabels = {
   work: 'Trabajo',
   personal: 'Personal',
@@ -53,7 +46,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-gold/5 to-sky/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       <div className="relative flex items-start gap-4">
         {/* Checkbox */}
         <button
@@ -65,7 +58,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
               <CheckCircle2 className="h-6 w-6 text-white" />
             </div>
           ) : (
-            <Circle className="h-6 w-6 text-gray-500 hover:text-cyan-400 transition-colors" />
+            <Circle className="h-6 w-6 text-gray-500 hover:text-gold transition-colors" />
           )}
         </button>
 
@@ -109,7 +102,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
               {priorityLabels[task.priority]}
             </span>
 
-            <div className="flex items-center gap-1.5 text-gray-400 bg-gray-800/50 px-2 py-1 rounded-lg border border-gray-700">
+            <div className="flex items-center gap-1.5 text-gray-400 bg-black/40 px-2 py-1 rounded-lg border border-white/10">
               <Timer className="h-3.5 w-3.5" />
               <span>
                 {task.actual_pomodoros}/{task.estimated_pomodoros}
@@ -117,7 +110,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
             </div>
 
             {task.due_date && (
-              <div className="flex items-center gap-1.5 text-gray-400 bg-gray-800/50 px-2 py-1 rounded-lg border border-gray-700">
+              <div className="flex items-center gap-1.5 text-gray-400 bg-black/40 px-2 py-1 rounded-lg border border-white/10">
                 <Clock className="h-3.5 w-3.5" />
                 <span>{formatRelativeTime(task.due_date)}</span>
               </div>
@@ -130,7 +123,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
           <div className="flex gap-2">
             <button
               onClick={() => onEdit(task)}
-              className="rounded-xl p-2 text-gray-400 hover:bg-cyan-500/20 hover:text-cyan-400 border border-transparent hover:border-cyan-500/30 transition-all duration-200"
+              className="rounded-lg p-2 text-gray-400 hover:bg-gold/20 hover:text-gold border border-transparent hover:border-gold transition-all duration-300"
             >
               <Edit className="h-4 w-4" />
             </button>

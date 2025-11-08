@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import type { SessionType } from '@/types/pomodoro';
 
 export function PomodoroTimer() {
-  const { session, startSession, pauseSession, resumeSession, completeSession, abandonSession, addInterruption } = usePomodoroEngine();
+  const { session, startSession, pauseSession, resumeSession, abandonSession, addInterruption } = usePomodoroEngine();
   const { data: tasks } = useTasks({ completed: false });
   const [selectedTaskId, setSelectedTaskId] = useState<string | undefined>();
   const [sessionType, setSessionType] = useState<SessionType>('pomodoro');
@@ -77,20 +77,20 @@ export function PomodoroTimer() {
     <div className="space-y-8">
       {/* Timer Display */}
       <div className={cn('card-floating relative overflow-hidden p-16 text-center', getSessionColor())}>
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-sky/10 opacity-50"></div>
         <div className="relative">
           <div className="mb-6">
-            <h2 className={cn('text-2xl font-semibold', getSessionTextColor())}>
+            <h2 className={cn('text-2xl font-semibold uppercase tracking-wider', getSessionTextColor())}>
               {getSessionLabel()}
             </h2>
           </div>
 
-          <div className={cn('text-9xl font-bold tabular-nums bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent', getSessionTextColor())}>
+          <div className={cn('text-9xl font-bold tabular-nums text-gold', getSessionTextColor())}>
             {session ? formatTime(session.timeRemaining) : '25:00'}
           </div>
 
           {session && session.interruptions > 0 && (
-            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-400 bg-gray-800/50 px-4 py-2 rounded-xl border border-gray-700 inline-flex">
+            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-400 bg-black/40 px-4 py-2 rounded-lg border border-white/10 inline-flex">
               <AlertCircle className="h-4 w-4 text-orange-400" />
               <span>{session.interruptions} interrupción{session.interruptions > 1 ? 'es' : ''}</span>
             </div>
@@ -140,10 +140,10 @@ export function PomodoroTimer() {
           <button
             onClick={() => setSessionType('pomodoro')}
             className={cn(
-              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
+              'rounded-lg px-6 py-3 text-sm font-medium transition-all duration-300 uppercase tracking-wider',
               sessionType === 'pomodoro'
-                ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/30'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
+                ? 'bg-black/40 text-gold border border-gold shadow-agentic-hover'
+                : 'bg-black/40 text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
             )}
           >
             Pomodoro
@@ -151,10 +151,10 @@ export function PomodoroTimer() {
           <button
             onClick={() => setSessionType('short_break')}
             className={cn(
-              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
+              'rounded-lg px-6 py-3 text-sm font-medium transition-all duration-300 uppercase tracking-wider',
               sessionType === 'short_break'
-                ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
+                ? 'bg-black/40 text-gold border border-gold shadow-agentic-hover'
+                : 'bg-black/40 text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
             )}
           >
             Descanso Corto
@@ -162,10 +162,10 @@ export function PomodoroTimer() {
           <button
             onClick={() => setSessionType('long_break')}
             className={cn(
-              'rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200',
+              'rounded-lg px-6 py-3 text-sm font-medium transition-all duration-300 uppercase tracking-wider',
               sessionType === 'long_break'
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
+                ? 'bg-black/40 text-gold border border-gold shadow-agentic-hover'
+                : 'bg-black/40 text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
             )}
           >
             Descanso Largo

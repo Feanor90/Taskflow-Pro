@@ -1,4 +1,4 @@
-import type { ActiveSession, SessionType, SessionStatus, PomodoroSettings } from '@/types/pomodoro';
+import type { ActiveSession, SessionType, PomodoroSettings } from '@/types/pomodoro';
 
 type EventCallback = (data: any) => void;
 

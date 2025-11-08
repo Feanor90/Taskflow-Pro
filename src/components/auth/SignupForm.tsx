@@ -75,7 +75,7 @@ export function SignupForm() {
   return (
     <div className="w-full max-w-md space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold tracking-wider text-gold uppercase">
           Crear Cuenta
         </h2>
         <p className="mt-2 text-sm text-gray-400">
@@ -153,7 +153,7 @@ export function SignupForm() {
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary w-full py-3"
+          className="btn-primary w-full py-3 uppercase tracking-wider"
         >
           {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
         </button>
@@ -194,7 +194,7 @@ export function SignupForm() {
         ¿Ya tienes cuenta?{' '}
         <a
           href="/login"
-          className="font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+          className="font-medium text-gold hover:text-gold/80 transition-colors uppercase tracking-wider"
         >
           Inicia sesión
         </a>

@@ -12,7 +12,7 @@ interface TaskFormProps {
 }
 
 export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
-  const [formData, setFormData] = useState<CreateTaskInput>({
+  const [formData, setFormData] = useState({
     title: task?.title || '',
     description: task?.description || '',
     priority: task?.priority || 'medium',
@@ -48,6 +48,12 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validar título al crear
+    if (!task && (!formData.title || formData.title.trim().length === 0)) {
+      alert('El título es requerido');
+      return;
+    }
     
     const dataToSubmit: any = {};
     

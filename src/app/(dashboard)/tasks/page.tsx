@@ -11,7 +11,7 @@ export default function TasksPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold text-gold uppercase tracking-wider">
           Mis Tareas
         </h1>
         <p className="mt-2 text-gray-400">

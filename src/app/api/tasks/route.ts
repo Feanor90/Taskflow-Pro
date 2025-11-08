@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import type { Database } from '@/types/database';
-import { createClient } from '@supabase/supabase-js';
 
 const createTaskSchema = z.object({
   title: z.string().min(1, 'El título es requerido').max(255),

@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Play } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { Providers } from './providers';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const play = Play({ 
+  subsets: ['latin'], 
+  weight: ['400', '700'],
+  variable: '--font-primary',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'TaskFlow Pro - Gestión de Tareas con Pomodoro',
@@ -26,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${play.variable} font-sans antialiased`}>
         <Providers>
           <AuthProvider>{children}</AuthProvider>
         </Providers>

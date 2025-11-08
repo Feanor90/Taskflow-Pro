@@ -28,38 +28,70 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
+    // Verificar si Supabase está configurado
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('ejemplo') || supabaseUrl.includes('placeholder')) {
+      console.warn('⚠️ Supabase no está configurado correctamente. La aplicación funcionará en modo limitado.');
+      setLoading(false);
+      return;
+    }
+
+    let subscription: { unsubscribe: () => void } | null = null;
+
     // Obtener sesión inicial
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error('Error obteniendo sesión:', error);
+        setLoading(false);
+        return;
+      }
+
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        loadUserPreferences(session.user.id);
+        loadUserPreferences();
       }
+      setLoading(false);
+    }).catch((error) => {
+      console.error('Error en getSession:', error);
       setLoading(false);
     });
 
     // Escuchar cambios de autenticación
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, 'Session:', !!session);
-      setSession(session);
-      setUser(session?.user ?? null);
+    try {
+      const {
+        data: { subscription: authSubscription },
+      } = supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('Auth state changed:', event, 'Session:', !!session);
+        setSession(session);
+        setUser(session?.user ?? null);
 
-      if (session?.user) {
-        await loadUserPreferences(session.user.id);
-      } else {
-        setPreferences(DEFAULT_PREFERENCES);
-      }
+        if (session?.user) {
+          await loadUserPreferences();
+        } else {
+          setPreferences(DEFAULT_PREFERENCES);
+        }
 
+        setLoading(false);
+      });
+
+      subscription = authSubscription;
+    } catch (error) {
+      console.error('Error configurando onAuthStateChange:', error);
       setLoading(false);
-    });
+    }
 
-    return () => subscription.unsubscribe();
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
   }, []);
 
-  const loadUserPreferences = async (userId: string) => {
+  const loadUserPreferences = async () => {
     try {
       // Intentar cargar preferencias del user metadata
       const { data: userData } = await supabase.auth.getUser();
@@ -123,7 +155,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(data.session);
       setUser(data.user);
       if (data.user) {
-        await loadUserPreferences(data.user.id);
+        await loadUserPreferences();
       }
     }
   };
@@ -146,15 +178,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    try {
+      // Cerrar sesión en Supabase (esto también limpia las cookies)
+      const { error } = await supabase.auth.signOut();
 
-    if (error) {
+      if (error) {
+        console.error('Error signing out:', error);
+        throw error;
+      }
+
+      // Limpiar el estado local inmediatamente
+      setUser(null);
+      setSession(null);
+      setPreferences(DEFAULT_PREFERENCES);
+
+      // Esperar un momento para asegurar que las cookies se limpien
+      // El evento onAuthStateChange se disparará automáticamente
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    } catch (error) {
+      console.error('Error en signOut:', error);
+      // Aún así, limpiar el estado local en caso de error
+      setUser(null);
+      setSession(null);
+      setPreferences(DEFAULT_PREFERENCES);
       throw error;
     }
-
-    setUser(null);
-    setSession(null);
-    setPreferences(DEFAULT_PREFERENCES);
   };
 
   const signInWithOAuth = async (provider: 'google' | 'github') => {
@@ -182,6 +230,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signInWithOAuth,
   };
 
+  // Renderizar siempre los children, el loading se maneja en los componentes individuales
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

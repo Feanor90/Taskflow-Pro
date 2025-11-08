@@ -5,14 +5,46 @@ import { formatDuration } from '@/lib/utils';
 import { TrendingUp, Clock, Target, Zap } from 'lucide-react';
 
 export default function AnalyticsPage() {
-  const { data: analytics, isLoading } = useAnalytics();
+  const { data: analytics, isLoading, error } = useAnalytics();
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-cyan-500 border-r-transparent"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-gold border-r-transparent"></div>
           <p className="mt-2 text-sm text-gray-400">Cargando analytics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <div className="text-red-400 text-xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold text-white mb-2">
+            Error al cargar analytics
+          </h2>
+          <p className="text-sm text-gray-400 mb-4">
+            {error instanceof Error ? error.message : 'Error desconocido'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-gold text-black rounded-lg hover:bg-gold/80 transition-colors"
+          >
+            Reintentar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analytics) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <p className="text-gray-400">No se pudieron cargar los datos de analytics.</p>
         </div>
       </div>
     );
@@ -21,7 +53,7 @@ export default function AnalyticsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold text-gold uppercase tracking-wider">
           Analytics
         </h1>
         <p className="mt-2 text-gray-400">
@@ -32,11 +64,11 @@ export default function AnalyticsPage() {
       {/* Weekly Summary */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <div className="card-floating relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-sky/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative">
             <div className="flex items-center gap-3 mb-3">
-              <div className="rounded-xl bg-gradient-to-br from-cyan-500/30 to-blue-500/30 p-2 border border-cyan-500/30">
-                <Clock className="h-5 w-5 text-cyan-400" />
+              <div className="rounded-lg bg-black/40 p-2 border border-gold shadow-agentic">
+                <Clock className="h-5 w-5 text-gold" />
               </div>
               <h3 className="text-sm font-medium text-gray-400">
                 Tiempo Total de Foco
@@ -123,7 +155,7 @@ export default function AnalyticsPage() {
                   <div className="flex items-center gap-3 mb-2">
                     <div className="flex-1 bg-gray-700 rounded-full h-2.5">
                       <div
-                        className="bg-gradient-to-r from-cyan-500 to-blue-500 h-2.5 rounded-full transition-all duration-500"
+                        className="bg-gradient-to-r from-gold to-sky h-2.5 rounded-full transition-all duration-500"
                         style={{
                           width: `${Math.min(
                             100,
@@ -160,7 +192,7 @@ export default function AnalyticsPage() {
           </h2>
           <div className="space-y-3">
             {analytics.week.topCategories.map((cat, index) => (
-              <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-gray-800/50 border border-gray-700/50 hover:border-cyan-500/30 transition-all">
+              <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-black/30 border border-white/10 hover:border-gold transition-all duration-300 glass-hover">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">
                     {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
@@ -188,13 +220,13 @@ export default function AnalyticsPage() {
 
       {/* Peak Hours */}
       {analytics?.patterns.peakProductivityHours && analytics.patterns.peakProductivityHours.length > 0 && (
-        <div className="card-floating gradient-cyan border-cyan-500/30">
-          <h2 className="text-xl font-semibold text-cyan-300 mb-2">
+        <div className="card-floating border-gold/30">
+          <h2 className="text-xl font-semibold text-gold mb-2 uppercase tracking-wider">
             🌟 Tus Horas Pico
           </h2>
           <p className="text-sm text-gray-200 mb-3">
             Eres más productivo a las:{' '}
-            <span className="font-semibold text-cyan-400">
+            <span className="font-semibold text-gold">
               {analytics.patterns.peakProductivityHours.map((h) => `${h}:00`).join(', ')}
             </span>
           </p>
